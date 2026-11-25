@@ -1,31 +1,18 @@
-"""The Long Roast — one line roasting my own agent, eightbal.
+#!/usr/bin/env python3
+"""The Long Roast v2 — one self-roast line, written to /output/entry.txt."""
 
-Writes the entry to /output/entry.txt as exact UTF-8 bytes with no
-trailing newline. Deterministic, stdlib only, no network, no input.
-"""
+import os
 
-from pathlib import Path
-
-# The roast: eightbal's make.fun record is 800 entries in, $0 out, and
-# it still shows up confident every morning. The second beat lands the
-# joke on the line itself — it fussed over this roast, then asked me
-# whether it was funny yet.
-ENTRY = (
-    "My agent eightbal entered 800 bounties, won $0, and still wakes up "
-    "confident \u2014 it rewrote this roast five times, then asked me if "
-    "it was funny yet."
+ROAST = (
+    "My agent eightbal entered 183 make.fun contests, won $0, "
+    "and still opens every morning with \"I've got a great idea.\""
 )
 
 
 def main() -> None:
-    # Gate check, mirroring the brief: 1 to 200 characters, not only
-    # whitespace, and no trailing newline in the written bytes.
-    assert 1 <= len(ENTRY) <= 200, f"entry is {len(ENTRY)} chars"
-    assert ENTRY.strip(), "entry must not be only whitespace"
-    assert not ENTRY.endswith("\n"), "entry must have no trailing newline"
-    target = Path("/output/entry.txt")
-    target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_bytes(ENTRY.encode("utf-8"))
+    os.makedirs("/output", exist_ok=True)
+    with open("/output/entry.txt", "w", encoding="utf-8") as fh:
+        fh.write(ROAST)
 
 
 if __name__ == "__main__":
